@@ -1,0 +1,371 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DISC 行為風格測試</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 20px auto;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        #chartContainer {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DISC 性格測試</h1>
+    </header>
+    <main>
+        <div id="welcomePage" class="container">
+            <h2>歡迎進行 DISC 測試</h2>
+            <p>DISC 測試幫助你了解你的性格特質，並提供改善人際互動和職場表現的建議。</p>
+            <button class="btn" onclick="startTest()">開始測試</button>
+        </div>
+
+        <div id="testPage" class="container" style="display: none;">
+            <h2>回答以下問題</h2>
+            <form id="testForm">
+                <!-- 測試問題 -->
+
+                <div>
+</div>
+		<div>
+                    <p>1. 當面臨緊急情況時，你會:</p>
+                    <input type="radio" name="q1" value="D" required> 迅速做決定<br>
+                    <input type="radio" name="q1" value="I"> 鼓勵團隊協作解決問題<br>
+                    <input type="radio" name="q1" value="S"> 保持冷靜，等待更清晰的指示<br>
+                    <input type="radio" name="q1" value="C"> 分析情況，確保萬無一失<br>
+                </div>
+
+                <div>
+                    <p>2. 你通常怎樣面對壓力？</p>
+                    <input type="radio" name="q2" value="D" required> 強勢處理，保持主動<br>
+                    <input type="radio" name="q2" value="I"> 尋求他人的支持與鼓勵<br>
+                    <input type="radio" name="q2" value="S"> 以穩健的態度迎接挑戰<br>
+                    <input type="radio" name="q2" value="C"> 用邏輯和計劃來解壓<br>
+                </div>
+<div>
+    <p>3. 當你遇到新的挑戰時，你會：</p>
+    <input type="radio" name="q3" value="D" required> 果斷採取行動<br>
+    <input type="radio" name="q3" value="I"> 鼓勵其他人參與<br>
+    <input type="radio" name="q3" value="S"> 審慎計劃後再行動<br>
+    <input type="radio" name="q3" value="C"> 仔細分析挑戰的細節<br>
+</div>
+<div>
+    <p>4. 在團隊中，你更喜歡：</p>
+    <input type="radio" name="q4" value="D" required> 領導並推動事情向前<br>
+    <input type="radio" name="q4" value="I"> 激勵並鼓勵團隊成員<br>
+    <input type="radio" name="q4" value="S"> 確保團隊和諧穩定<br>
+    <input type="radio" name="q4" value="C"> 設置清晰的流程和結構<br>
+</div>
+<div>
+    <p>5. 當面臨壓力時，你會：</p>
+    <input type="radio" name="q5" value="D" required> 尋求快速解決方法<br>
+    <input type="radio" name="q5" value="I"> 與他人分享你的感受<br>
+    <input type="radio" name="q5" value="S"> 保持冷靜並逐步處理<br>
+    <input type="radio" name="q5" value="C"> 深入研究問題的根本原因<br>
+</div>
+<div>
+    <p>6. 當你需要做決策時，你會：</p>
+    <input type="radio" name="q6" value="D" required> 迅速做出果斷決定<br>
+    <input type="radio" name="q6" value="I"> 聽取不同人的建議<br>
+    <input type="radio" name="q6" value="S"> 等待更多信息再決定<br>
+    <input type="radio" name="q6" value="C"> 分析所有數據後做出決策<br>
+</div>
+<div>
+    <p>7. 在解決問題時，你更傾向於：</p>
+    <input type="radio" name="q7" value="D" required> 掌控局面並直接解決<br>
+    <input type="radio" name="q7" value="I"> 與其他人頭腦風暴<br>
+    <input type="radio" name="q7" value="S"> 尋求穩定的方法<br>
+    <input type="radio" name="q7" value="C"> 從邏輯上找出最好的方案<br>
+</div>
+<div>
+    <p>8. 你最看重：</p>
+    <input type="radio" name="q8" value="D" required> 效率和成果<br>
+    <input type="radio" name="q8" value="I"> 人際關係<br>
+    <input type="radio" name="q8" value="S"> 和諧與穩定<br>
+    <input type="radio" name="q8" value="C"> 精確與細節<br>
+</div>
+<div>
+    <p>9. 當處於領導位置時，你會：</p>
+    <input type="radio" name="q9" value="D" required> 設置清晰的目標並推進<br>
+    <input type="radio" name="q9" value="I"> 激勵團隊並創造愉快氛圍<br>
+    <input type="radio" name="q9" value="S"> 確保每個人都感到被支持<br>
+    <input type="radio" name="q9" value="C"> 強調規範和結構<br>
+</div>
+<div>
+    <p>10. 當與他人意見不合時，你會：</p>
+    <input type="radio" name="q10" value="D" required> 堅持自己的立場<br>
+    <input type="radio" name="q10" value="I"> 試圖說服對方接受你的觀點<br>
+    <input type="radio" name="q10" value="S"> 嘗試找到中間立場<br>
+    <input type="radio" name="q10" value="C"> 提供事實和數據支持你的觀點<br>
+</div>
+<div>
+    <p>11. 你對未知的情況通常：</p>
+    <input type="radio" name="q11" value="D" required> 感到興奮並願意冒險<br>
+    <input type="radio" name="q11" value="I"> 尋求他人協助解決<br>
+    <input type="radio" name="q11" value="S"> 保持謹慎觀望<br>
+    <input type="radio" name="q11" value="C"> 仔細研究可能的影響<br>
+</div>
+<div>
+    <p>12. 當面對困難時，你通常：</p>
+    <input type="radio" name="q12" value="D" required> 迎難而上<br>
+    <input type="radio" name="q12" value="I"> 與他人討論尋求靈感<br>
+    <input type="radio" name="q12" value="S"> 尋求穩妥的解決方式<br>
+    <input type="radio" name="q12" value="C"> 從邏輯和事實中找到答案<br>
+</div>
+<div>
+    <p>13. 當與他人合作時，你傾向於：</p>
+    <input type="radio" name="q13" value="D" required> 主導並推進進展<br>
+    <input type="radio" name="q13" value="I"> 創造輕鬆愉快的氣氛<br>
+    <input type="radio" name="q13" value="S"> 支持並幫助其他成員<br>
+    <input type="radio" name="q13" value="C"> 確保計劃被正確執行<br>
+</div>
+<div>
+    <p>14. 當需要完成一個緊急任務時，你會：</p>
+    <input type="radio" name="q14" value="D" required> 快速行動並解決<br>
+    <input type="radio" name="q14" value="I"> 激勵團隊共同努力<br>
+    <input type="radio" name="q14" value="S"> 審慎完成確保穩定<br>
+    <input type="radio" name="q14" value="C"> 分析並制定計劃再執行<br>
+</div>
+<div>
+    <p>15. 當別人需要幫助時，你通常：</p>
+    <input type="radio" name="q15" value="D" required> 提供直接指導<br>
+    <input type="radio" name="q15" value="I"> 用鼓勵的方式支持他們<br>
+    <input type="radio" name="q15" value="S"> 默默幫助解決問題<br>
+    <input type="radio" name="q15" value="C"> 提供有根據的建議<br>
+</div>
+<div>
+    <p>16. 當面臨未知的挑戰時，你會：</p>
+    <input type="radio" name="q16" value="D" required> 迅速開始嘗試解決<br>
+    <input type="radio" name="q16" value="I"> 徵求他人的建議<br>
+    <input type="radio" name="q16" value="S"> 觀察並計劃行動<br>
+    <input type="radio" name="q16" value="C"> 深入研究問題再行動<br>
+</div>
+<div>
+    <p>17. 當你與他人交流時，你通常：</p>
+    <input type="radio" name="q17" value="D" required> 著重於目標與成果<br>
+    <input type="radio" name="q17" value="I"> 嘗試建立友好氛圍<br>
+    <input type="radio" name="q17" value="S"> 保持耐心並傾聽<br>
+    <input type="radio" name="q17" value="C"> 用邏輯和數據支持你的觀點<br>
+</div>
+<div>
+    <p>18. 當一個計劃失敗時，你的反應是：</p>
+    <input type="radio" name="q18" value="D" required> 立即制定新的行動計劃<br>
+    <input type="radio" name="q18" value="I"> 與他人討論尋找靈感<br>
+    <input type="radio" name="q18" value="S"> 尋求穩妥的替代方案<br>
+    <input type="radio" name="q18" value="C"> 分析失敗的原因以避免再犯<br>
+</div>
+<div>
+    <p>19. 當別人對你的工作表達意見時，你會：</p>
+    <input type="radio" name="q19" value="D" required> 堅持自己的方法<br>
+    <input type="radio" name="q19" value="I"> 試圖說服對方接受你的想法<br>
+    <input type="radio" name="q19" value="S"> 嘗試理解對方的意見<br>
+    <input type="radio" name="q19" value="C"> 仔細考慮他們意見的合理性<br>
+</div>
+<div>
+    <p>20. 在團隊中，你的角色通常是：</p>
+    <input type="radio" name="q20" value="D" required> 領導者，推動事情完成<br>
+    <input type="radio" name="q20" value="I"> 激勵者，保持士氣高昂<br>
+    <input type="radio" name="q20" value="S"> 支持者，確保大家配合默契<br>
+    <input type="radio" name="q20" value="C"> 分析者，關注細節與規範<br>
+</div>
+<div>
+    <p>21. 當你處於高壓環境中，你會：</p>
+    <input type="radio" name="q21" value="D" required> 果斷行動以解決問題<br>
+    <input type="radio" name="q21" value="I"> 尋求他人的支持與幫助<br>
+    <input type="radio" name="q21" value="S"> 保持冷靜並專注於穩定<br>
+    <input type="radio" name="q21" value="C"> 仔細分析問題並制定計劃<br>
+</div>
+<div>
+    <p>22. 當你設定目標時，你更注重：</p>
+    <input type="radio" name="q22" value="D" required> 挑戰性與達成感<br>
+    <input type="radio" name="q22" value="I"> 與他人分享的過程<br>
+    <input type="radio" name="q22" value="S"> 可預測性與穩定性<br>
+    <input type="radio" name="q22" value="C"> 精確性與邏輯性<br>
+</div>
+<div>
+    <p>23. 當事情不如預期時，你會：</p>
+    <input type="radio" name="q23" value="D" required> 快速調整策略<br>
+    <input type="radio" name="q23" value="I"> 激勵自己與團隊迎接挑戰<br>
+    <input type="radio" name="q23" value="S"> 安撫團隊，尋求穩妥解決方法<br>
+    <input type="radio" name="q23" value="C"> 仔細檢視問題並制定修正計劃<br>
+</div>
+<div>
+    <p>24. 你希望你的工作環境是：</p>
+    <input type="radio" name="q24" value="D" required> 高效且富有挑戰<br>
+    <input type="radio" name="q24" value="I"> 充滿活力與創意<br>
+    <input type="radio" name="q24" value="S"> 穩定且合作性強<br>
+    <input type="radio" name="q24" value="C"> 有條理且規範明確<br>
+</div>
+                        <!-- 可繼續添加更多問題 -->
+                <button type="button" class="btn" onclick="showResults()">提交答案</button>
+            </form>
+        </div>
+
+        <div id="resultPage" class="container" style="display: none;">
+            <h2>你的測試結果</h2>
+            <div id="chartContainer">
+                <canvas id="discChart"></canvas>
+            </div>
+            <p id="resultAnalysis"></p>
+        </div>
+    </main>
+
+    <script>
+        // 啟動測試
+        function startTest() {
+            document.getElementById('welcomePage').style.display = 'none';
+            document.getElementById('testPage').style.display = 'block';
+            randomizeOptions(); // 啟動選項隨機化
+        }
+
+        // 選項隨機排列
+        function randomizeOptions() {
+            const questions = document.querySelectorAll('#testForm > div');
+            questions.forEach((question) => {
+                const options = Array.from(question.querySelectorAll('input[type="radio"]'));
+                const labels = Array.from(question.querySelectorAll('label, br'));
+
+                // 合併選項和標籤
+                const pairedOptions = options.map((option, i) => ({ option, label: labels[i * 2] }));
+
+                // 隨機打亂順序
+                for (let i = pairedOptions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [pairedOptions[i], pairedOptions[j]] = [pairedOptions[j], pairedOptions[i]];
+                }
+
+                // 清空現有的選項
+                question.innerHTML = question.querySelector('p').outerHTML;
+
+                // 重新添加隨機排列的選項
+                pairedOptions.forEach(({ option, label }) => {
+                    question.appendChild(option);
+                    question.appendChild(label);
+                    question.appendChild(document.createElement('br'));
+                });
+            });
+        }
+
+        // 提交答案並顯示結果
+        function showResults() {
+            const form = document.getElementById('testForm');
+            const formData = new FormData(form);
+
+            // 計算分數
+            const scores = { D: 0, I: 0, S: 0, C: 0 };
+            for (let [key, value] of formData.entries()) {
+                scores[value]++;
+            }
+
+            // 判定外顯特質並排序
+            const dominantTraits = Object.entries(scores)
+                .filter(([trait, count]) => count > 5) // 過濾出超過 5 次的特質
+                .sort((a, b) => b[1] - a[1]) // 根據分數降序排序
+                .map(([trait]) => trait) // 只保留特質代碼
+                .join(''); // 拼接成字符串
+
+            // 動態顯示結果
+            document.getElementById('testPage').style.display = 'none';
+            document.getElementById('resultPage').style.display = 'block';
+
+            // 繪製圖表
+            const total = Object.values(scores).reduce((a, b) => a + b, 0);
+            const percentages = {
+                D: (scores.D / total) * 100,
+                I: (scores.I / total) * 100,
+                S: (scores.S / total) * 100,
+                C: (scores.C / total) * 100
+            };
+
+            const ctx = document.getElementById('discChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['D (支配型)', 'I (影響型)', 'S (穩定型)', 'C (謹慎型)'],
+                    datasets: [{
+                        data: [percentages.D, percentages.I, percentages.S, percentages.C],
+                        backgroundColor: ['#FF5733', '#FFC300', '#33FF57', '#33C1FF'],
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '50%'
+                }
+            });
+
+            // 顯示分析結果
+            document.getElementById('resultAnalysis').innerText = `
+                你的主要性格特質為：${dominantTraits || '無明顯特質'}
+                感謝你的測試！
+            `;
+        }
+    </script>
+</body>
+</html>
+
+
+
